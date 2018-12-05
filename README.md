@@ -1,5 +1,4 @@
 # Oneview-Splunk integration
-# OneView and Nagios Integration for Hardware Infrastructure Monitoring
 
 **Problem Statement**
 
