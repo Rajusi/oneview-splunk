@@ -23,13 +23,13 @@ Steps to configure above machine for running the script:
 
 We assume that the Splunk enterprise server is configured to receive data from splunk forwarders and the port numbers are known
 ```	
-	Configure folder for log monitoring:
-	$ <SPLUNK_FORWARDER_HOME>./splunk add monitor <log folder to be monitored>
-	Eg: $ <SPLUNK_FORWARDER_HOME>./splunk add monitor /home/path/to/project/folder/oneview_splunk_logs
+Configure folder for log monitoring:
+$ <SPLUNK_FORWARDER_HOME>./splunk add monitor <log folder to be monitored>
+Eg: $ <SPLUNK_FORWARDER_HOME>./splunk add monitor /home/path/to/project/folder/oneview_splunk_logs
 	
-	Configure splunk server with port info for monitoring:
-	$ <SPLUNK_FORWARDER_HOME>./splunk add forward-server <IP Address>:<PortNo>
-	Eg: <SPLUNK_FORWARDER_HOME>./splunk add forward-server 10.10.1.1:9997
+Configure splunk server with port info for monitoring:
+$ <SPLUNK_FORWARDER_HOME>./splunk add forward-server <IP Address>:<PortNo>
+Eg: <SPLUNK_FORWARDER_HOME>./splunk add forward-server 10.10.1.1:9997
 	
 ```
 
