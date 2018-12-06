@@ -36,17 +36,6 @@ from datetime import datetime
 
 
 ##################################################################
-# Caption Ctrl+C
-##################################################################
-def signal_handler(signal, frame):
-	# print('You pressed Ctrl+C! Exiting.')
-	logging.info('You pressed Ctrl+C! Exiting.')
-	sys.exit(0)
-
-signal.signal(signal.SIGINT, signal_handler)
-
-
-##################################################################
 # Validate OneView appliance details.
 # Function needs to be added with new parameters when updated in Json
 ##################################################################

@@ -40,10 +40,23 @@ from functools import partial
 import amqplib.client_0_8 as amqp
 from internal.scmb_utils import *
 
-global tim1, dat, count
+global tim1, dat, count, fo
 tim1=time.strftime("%H:%M:%S")
 dat = time.strftime("%d-%m-%Y")
 count=0
+
+
+##################################################################
+# Caption Ctrl+C - Moving signal handler to close the splunk log file
+##################################################################
+def signal_handler(signal, frame):
+	global fo
+	fo.close()
+	# print('You pressed Ctrl+C! Exiting.')
+	logging.info('You pressed Ctrl+C! Exiting.')
+	sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 
 
@@ -110,6 +123,7 @@ def callback(channel, msg):
 # Init for the splunk logging.
 ##################################################################
 def initialize_splunk_logging():
+	global fo
 	# Initialize the log file path, log format and log level
 	logfiledir = os.getcwd() + os.sep + "oneview_splunk_logs"
 	if not os.path.isdir(logfiledir):
@@ -117,6 +131,9 @@ def initialize_splunk_logging():
 
 	logfile = logfiledir + os.sep +"oneview_alerts_splunk.log"
 	if os.path.exists(logfile):
+		# Open the file in append mode if exists
+		fo = open(logfile, 'a')
+		
 		# Edit logic to create new file if the filesize is greater than 1 MB. Need to decide on teh file naming convention.
 		'''
 		fStats = os.stat(logfile) 
@@ -130,25 +147,29 @@ def initialize_splunk_logging():
 		'''
 	else:
 		#Create empty logfile
-		open(logfile, 'a').close()
+		fo = open(logfile, "w+")
 
 		
 ##function to convert alerts into  syslog format
 def create_syslog(json_obj):
 	#version=count
-	global count
-	fo = open(syslog_file, "a")
+	global count, fo
+	
 	created_date = json_obj['created']
 	severity = json_obj['severity']
 	uri = json_obj['uri']
 	associated_rsc = json_obj['associatedResource']['associationType']+json_obj['associatedResource']['resourceCategory']+json_obj['associatedResource']['resourceName']+json_obj['associatedResource']['resourceUri']+json_obj['alertState']+json_obj['physicalResourceType']
 	desc=json_obj['correctiveAction']
+	
 	if desc == None :
 		Converted_str=convert_string(desc)
 		desc=json_obj['description']+Converted_str
 	else:
 		desc=json_obj['description']+json_obj['correctiveAction']
+	print("here 1")
+	print(fo)
 	fo.write('OneView_Alerts-'+str(count)+" "+str(created_date)+" "+str(severity)+" "+str(uri)+" "+"-"+str(associated_rsc)+" "+"["+desc+"]"+" "+"\n")
+	fo.flush()
 
 
 ##function for converting None type to string type
@@ -298,7 +319,6 @@ def main():
 		# Start listening for messages.
 		recv(oneViewDetails["host"], oneViewDetails["route"])
 		
-
 	elif oneViewDetails["action"] == "stop":
 		# Stop SCMB connection for this appliance
 		logging.info("TODO: stop action implementation")
@@ -307,6 +327,10 @@ def main():
 		# Do nothing and exit
 		logging.error("Missing or invalid option for action in oneview.json; It should be start/stop.")
 		print("Missing or invalid option for action in oneview.json; It should be start/stop.")
+		
+	# Close the file which is used to write the splunk syslogs. 
+	print("Closing splunk log file.")
+	fo.close()
 		
 
 if __name__ == '__main__':
