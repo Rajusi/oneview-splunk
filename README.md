@@ -14,8 +14,7 @@ Steps to configure above machine for running the script:
 2. Extract the folder and navigate to it
 3. Run the following command to install the required modules. 
 	$ pip3 install -r requirements.txt
-	
-4. Configure the splunk forwarder to forward the logs from the folder "oneview_splunk_logs" from the project folder
+
 ```
 ### Prerequisites and Installing the components of test environment
 
