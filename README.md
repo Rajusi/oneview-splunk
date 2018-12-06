@@ -91,7 +91,7 @@ Setting up the OneView appliance.
 
 Edit the following information:
 ```
-1. OneView details - ipaddress, username, password, process_onetime_alerts flag, events dated from for onetime events alerting to Nagios, polling time, alert type and alert hardware category.
+1. OneView details - ipaddress, username, password, alert type and alert hardware category.
 2. Logging level
 ```
 
