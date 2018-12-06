@@ -29,7 +29,7 @@ Steps to configure above machine for running the script:
 ```
 ### Installing the components of test environment
 
-We assume that the Splunk enterprise server is configured to receive data from splunk forwarders and the port numbers are known
+We assume that the Splunk server is configured to receive data from splunk heavy forwarders and the port numbers are known. Steps to configure heavy forwarder are out of scope of the document.
 ```	
 Configure folder for log monitoring:
 $ <SPLUNK_FORWARDER_HOME>./splunk add monitor <log folder to be monitored>
@@ -42,7 +42,7 @@ Eg: <SPLUNK_FORWARDER_HOME>./splunk add forward-server 10.10.1.1:9997
 ``
 
 
-
+```
 ### To run as standalone script
 
 Ensure the following:
