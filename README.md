@@ -16,8 +16,6 @@ Machine to run the python script:
 		six==1.11.0
 		hponeview==4.7.0
 		
-	Steps to follow the splunk heavy forwarder is out of the scope of this document. Please refer to literature on splunk website.
-
 ```
 
 Steps to configure above machine for running the script:
@@ -25,7 +23,6 @@ Steps to configure above machine for running the script:
 1. Clone the project folder to suitable location and navigate to it. 
 2. Run the following command to install the required modules. 	
 	$ pip3 install -r requirements.txt
-
 ```
 ### Installing the components of test environment
 
@@ -38,11 +35,8 @@ Eg: $ <SPLUNK_FORWARDER_HOME>./splunk add monitor /home/path/to/project/folder/o
 Configure the machine to forward logs to splunk server with port info:
 $ <SPLUNK_FORWARDER_HOME>./splunk add forward-server <Splunk server IP>:<PortNo>
 Eg: <SPLUNK_FORWARDER_HOME>./splunk add forward-server 10.10.1.1:9997
-	
-``
-
-
 ```
+
 ### To run as standalone script
 
 Ensure the following:
