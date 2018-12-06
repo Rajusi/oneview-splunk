@@ -5,18 +5,20 @@
 System requirements - 
 
 We have tested with Centos running 7.3 and it should work with other machines as well:
-	1. Centos7.3 or above. 
-	2. python 3.6 or above
-	
+```
+1. Centos7.3 or above. 
+2. python 3.6 or above
+```
+
 Steps to configure above machine for running the script:
-	1. Clone the project folder to suitable location. 
-	2. Extract the folder and navigate to it
-	3. Run the following command to install the required modules. 
-		$ pip3 install -r requirements.txt
+```
+1. Clone the project folder to suitable location. 
+2. Extract the folder and navigate to it
+3. Run the following command to install the required modules. 
+	$ pip3 install -r requirements.txt
 	
-	4. Configure the splunk forwarder to forward the logs from the folder "oneview_splunk_logs" from the project folder
-
-
+4. Configure the splunk forwarder to forward the logs from the folder "oneview_splunk_logs" from the project folder
+```
 ### Prerequisites and Installing the components of test environment
 
 We assume that the Splunk enterprise server is configured to receive data from splunk forwarders and the port numbers are known
