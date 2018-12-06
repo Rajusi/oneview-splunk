@@ -88,7 +88,8 @@ def callback(channel, msg):
 	resource = content['resource']
 	#print("Alert state = " + resource['alertState'] + ". Severity = " + resource['severity'])
 	if(('alertState' in resource) and ('severity' in resource)):
-		if((('Active' == resource['alertState']) or ('Cleared' == resource['alertState'])) and ('Critical' == resource['severity']) ):
+		if((('Active' == resource['alertState']) or ('Cleared' == resource['alertState'])) and 
+		(('Critical' == resource['severity']) or ('Warning' == resource['severity']) or ('OK' == resource['severity'])) ):
 			print(resource)
 			global count
 			count = count + 1
