@@ -4,10 +4,8 @@
 
 System requirements - 
 
-We have tested with Centos running 7.3 and it should work with other machines as well:
 ```
-1. Centos7.3 or above. 
-2. python 3.6 or above
+System running Centos 7.3 and having configured python 3.6 or above.
 ```
 
 Steps to configure above machine for running the script:
@@ -75,8 +73,6 @@ We use [GitHub](http://github.org/) for versioning. For the versions available, 
 ## Authors
 
 * **GSE Team, Bangalore** 
-
-See also the list of [contributors](https://github.hpe.com/GSE/oneview-nagios/graphs/contributors) who participated in this project.
 
 ## License
 
