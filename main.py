@@ -46,20 +46,6 @@ dat = time.strftime("%d-%m-%Y")
 count=0
 
 
-##################################################################
-# Caption Ctrl+C - Moving signal handler to close the splunk log file
-##################################################################
-def signal_handler(signal, frame):
-	global fo
-	fo.close()
-	# print('You pressed Ctrl+C! Exiting.')
-	logging.info('You pressed Ctrl+C! Exiting.')
-	sys.exit(0)
-
-signal.signal(signal.SIGINT, signal_handler)
-
-
-
 # Global variable for callback
 config = {}
 syslog_file = "oneview_splunk_logs/oneview_alerts_splunk.log"
@@ -331,7 +317,18 @@ def main():
 	# Close the file which is used to write the splunk syslogs. 
 	print("Closing splunk log file.")
 	fo.close()
-		
+
+##################################################################
+# Caption Ctrl+C - Moving signal handler to close the splunk log file
+##################################################################
+def signal_handler(signal, frame):
+	global fo
+	fo.close()
+	# print('You pressed Ctrl+C! Exiting.')
+	logging.info('You pressed Ctrl+C! Exiting.')
+	sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 if __name__ == '__main__':
 	## Create a thread pool with 5 worker threads
