@@ -110,3 +110,5 @@ def stopSCMB(host):
 	# basic_cancel(msg.consumer_tag)
 	ch.basic_cancel(None, None)
 	ch.close()
+	
+	
