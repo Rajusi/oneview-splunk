@@ -24,8 +24,8 @@ Configure folder for log monitoring:
 $ <SPLUNK_FORWARDER_HOME>./splunk add monitor <log folder to be monitored>
 Eg: $ <SPLUNK_FORWARDER_HOME>./splunk add monitor /home/path/to/project/folder/oneview_splunk_logs
 	
-Configure splunk server with port info for monitoring:
-$ <SPLUNK_FORWARDER_HOME>./splunk add forward-server <IP Address>:<PortNo>
+Configure the machine to forward logs to splunk server with port info:
+$ <SPLUNK_FORWARDER_HOME>./splunk add forward-server <Splunk server IP>:<PortNo>
 Eg: <SPLUNK_FORWARDER_HOME>./splunk add forward-server 10.10.1.1:9997
 	
 ```
@@ -76,6 +76,4 @@ We use [GitHub](http://github.org/) for versioning. For the versions available, 
 ## License
 
 (C) Copyright (2018) Hewlett Packard Enterprise Development LP
-
-## Acknowledgments
 
