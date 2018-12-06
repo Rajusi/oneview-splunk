@@ -67,9 +67,15 @@ Eg: $ /home/user1/oneview_splunk python3.6 main.py -i config.json
 
 ### To see alert data which is sent to Splunk server. Check the same being received on Splunk enterprise server
 Generate alerts from oneview and ensure that the alerts are captured by the script. 
-Monitor the log folder using tail command. "tail -f <LOG_FILE>"
+
 Eg:
-`$ tail -f oneview_splunk_logs/oneview_alerts_splunk.log`
+```
+Monitor the log folder using tail command. 
+
+tail -f <LOG_FILE>
+Eg: $ tail -f oneview_splunk_logs/oneview_alerts_splunk.log
+```
+
 
 	
 ## Built With
