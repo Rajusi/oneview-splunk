@@ -38,10 +38,6 @@ from hpOneView.oneview_client import OneViewClient
 #from hpOneView import *
 from functools import partial
 import amqplib.client_0_8 as amqp
-from ov_client.oneview_client import *
-from common.send_nrdp import *
-# from internal.polling_threads import *
-from internal.polling_processes import *
 from internal.scmb_utils import *
 
 global tim1, dat, count
@@ -54,6 +50,21 @@ count=0
 # Global variable for callback
 config = {}
 syslog_file = "oneview_splunk_logs/oneview_alerts_splunk.log"
+
+def acceptEULA(oneview_client):
+	logging.info('acceptEULA')
+	# See if we need to accept the EULA before we try to log in
+	#con.get_eula_status()
+	eula_status = oneview_client.connection.get_eula_status()
+	try:
+	#	if con.get_eula_status() is True:
+	#		con.set_eula('no')
+		if eula_status is True:
+			oneview_client.connection.set_eula('no')
+	except Exception as e:
+		logging.error('EXCEPTION:')
+		logging.error(e)
+		
 
 def callback(channel, msg):
 	global config
@@ -75,6 +86,7 @@ def callback(channel, msg):
 	#create_syslog(content["resource"])
 
 	resource = content['resource']
+	#print("Alert state = " + resource['alertState'] + ". Severity = " + resource['severity'])
 	if(('alertState' in resource) and ('severity' in resource)):
 		if((('Active' == resource['alertState']) or ('Cleared' == resource['alertState'])) and ('Critical' == resource['severity']) ):
 			print(resource)
@@ -85,12 +97,41 @@ def callback(channel, msg):
 				create_syslog(resource)
 			except:
 				print("Error in logging the alert")
+				
+		else:
+			print("Alert state = " + resource['alertState'] + ". Ignoring")
 
 	# Cancel this callback
 	if msg.body == 'quit':
 		channel.basic_cancel(msg.consumer_tag)
 
+##################################################################
+# Init for the splunk logging.
+##################################################################
+def initialize_splunk_logging():
+	# Initialize the log file path, log format and log level
+	logfiledir = os.getcwd() + os.sep + "oneview_splunk_logs"
+	if not os.path.isdir(logfiledir):
+		os.makedirs(logfiledir)
 
+	logfile = logfiledir + os.sep +"oneview_alerts_splunk.log"
+	if os.path.exists(logfile):
+		# Edit logic to create new file if the filesize is greater than 1 MB. Need to decide on teh file naming convention.
+		'''
+		fStats = os.stat(logfile) 
+		if fStats.st_size >= 1024000:
+			#Backing up logfile if size is more than 1MB
+			timestamp = '{:%Y-%m-%d_%H_%M}'.format(datetime.now())
+			#Backup logfile
+			os.rename(logfile,logfiledir + os.sep + 'OneViewNagios_{}_'.format(oneViewIP)+ timestamp +".log")
+			#Create empty logfile
+			open(logfile, 'a').close()
+		'''
+	else:
+		#Create empty logfile
+		open(logfile, 'a').close()
+
+		
 ##function to convert alerts into  syslog format
 def create_syslog(json_obj):
 	#version=count
@@ -183,6 +224,9 @@ def main():
 
 	# Initialize logging
 	initialize_logging(oneViewDetails['host'], loggingLevel)
+	
+	# Init splunk logging
+	initialize_splunk_logging()
 
 	# Valid alert types sent by Oneview. This is used to compare the user input "alert_type" from oneview.json file
 	alertTypes = ['Ok','Warning','Critical','Unknown']
@@ -215,9 +259,8 @@ def main():
 
 
 	# Logging input details.
-	logging.info('OneView args: host = %s, alias = %s, route = %s, action = %s, process_onetime_alerts = %s, events_dated_from = %s', \
-		oneViewDetails["host"], oneViewDetails["alias"], oneViewDetails["route"], oneViewDetails["action"], \
-		oneViewDetails["process_onetime_alerts"], oneViewDetails["events_dated_from"])
+	logging.info('OneView args: host = %s, alias = %s, route = %s, action = %s', \
+		oneViewDetails["host"], oneViewDetails["alias"], oneViewDetails["route"], oneViewDetails["action"])
 		
 	# Esatblish connection to OneView
 	if oneViewDetails["action"] == "start":

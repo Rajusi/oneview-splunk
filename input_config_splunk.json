@@ -1,0 +1,14 @@
+{
+	"oneview_config": {
+		"host": "10.188.0.190",
+		"alias": "HPE-oneview",
+		"user": "v210usradmin",
+		"passwd": "SFAhbnZlbnQ=",
+		"action": "start",
+		"route": "scmb.alerts.#",
+		"alert_type": "Critical:Warning:Ok",
+		"alert_hardware_category": "server-hardware:enclosures:interconnects:logical-interconnects:sas-interconnects"
+	},
+	"logging_level": "DEBUG"
+}
+
