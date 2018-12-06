@@ -62,13 +62,12 @@ Once the above are checked, follow the steps below:-
 Command to run the script:
 $ <Project_Home>python3.6 main.py -i input.json
 Eg: $ /home/user1/oneview_splunk python3.6 main.py -i config.json
-
 ```
 
 ### To see alert data which is sent to Splunk server. Check the same being received on Splunk enterprise server
 Generate alerts from oneview and ensure that the alerts are captured by the script. 
 
-Eg:
+
 ```
 Monitor the log folder using tail command. 
 
