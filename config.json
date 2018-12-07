@@ -2,8 +2,8 @@
 	"oneview_config": {
 		"host": "10.188.0.190",
 		"alias": "HPE-oneview",
-		"user": "v210usradmin",
-		"passwd": "SFAhbnZlbnQ=",
+		"user": "admin",
+		"passwd": "youroneviewpassword",
 		"action": "start",
 		"route": "scmb.alerts.#",
 		"alert_type": "Critical:Warning:Ok",
