@@ -12,7 +12,7 @@ Prerequisites -
 
 ```
 OS: 
-	Centos 7.3  ( tested on centos but should work on RHEL )
+	Centos 7.3  ( basic testing was on done RHEL 7.5 and it works )
 Packages: 
 	python 3.6 ( not tested on Python 2.7.x )
 	pip3 (to install the following modules (including HPE oneview python module)
@@ -51,7 +51,7 @@ then, follow the steps below:-
 
 2. Start the script by issuing below command
 ```
-$ <Project_Home>python3.6 main.py -i input.json
+$ <Project_Home>python3.6 main.py -i config.json
 
 Eg: $ /home/user1/oneview_splunk python3.6 main.py -i config.json
 
