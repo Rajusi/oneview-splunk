@@ -75,7 +75,7 @@ check following before running the script:
 
 then, follow the steps below:-
 1. Edit the input config file with required oneview details in config.json
-   Specifying oneview ip and username as must. User is prompted for oneview password.
+   Specifying oneview ip and username is must. User is prompted for oneview password.
    
    Optionally you can edit the options to control and allow listening on particular alert severity or listen for particular resources.
    For example, you can set below field to allow only Critical alerts
