@@ -27,27 +27,57 @@ Packages:
 
 download the source and install the dependent packages:
 ```
-1. Clone the project folder to suitable location and navigate to it. 
+1. Clone the project folder to suitable location and navigate to it. You can use the following command to clone
+	$ git clone https://github.com/prakashmirji/oneview-splunk.git
 
+2. Setup Python
+   on RHEL 7.x using below commands
+	Setup epel-release repo
+	$ yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+	Setup IUS community repo
+	$ yum install -y https://rhel7.iuscommunity.org/ius-release.rpm
+
+	Install Python3.6 packages
+	$ yum install -y python36u python36u-libs python36u-devel python36u-pip
+   On CentOS 7.x
+   	Setup epel-release repo
+	$ yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+	Setup IUS community repo
+	$ yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+
+	Install Python3.6 packages
+	$ yum install -y python36u python36u-libs python36u-devel python36u-pip
+	
 2. Run the following command to install the required modules.
-
+	$ cd oneview-splunk
 	$ pip3 install -r requirements.txt
 	
 ```
 ### Setting up Splunk Heavy forwarder
 
 Setting up splunk heavy forwarder is out of scope for this document. Please follow the splunk document for this.
-Hope to add content in the future.
+However here are high level commands to add the monitor
+```
+$ ./splunk add forward-server <Splunk-server-IP>:9997
+$ ./splunk add monitor < absolute path of logs dir>
+```
 
 ### Steps to run script
 
 check following before running the script:
  
-1. Splunk indexer configured to receive data on a specific port. 
-2. Splunk forwarder configured with splunk indexer, port and the folder with log data to be forwarded. 
+1. Splunk indexer or enterprise server configured to receive data on a specific port. 
+2. Splunk forwarder configured with splunk indexer or enterprise, port and the folder with log data to be forwarded. 
 
 then, follow the steps below:-
-1. Edit the input config file with required oneview details
+1. Edit the input config file with required oneview details in config.json
+   Specifying oneview ip and username as must. User is prompted for oneview password. Optionally you can edit the options to control and allow listening on particular alert     severity or listen for particular resources.
+   For example, you can set below field to allow only Critical alerts
+   "alert_type": "Critical"
+   Similarly you can set below field to allow only alerts coming from server-hardware
+   "alert_hardware_category": "server-hardware"
 
 2. Start the script by issuing below command
 ```
@@ -55,7 +85,15 @@ $ <Project_Home>python3.6 main.py -i config.json
 
 Eg: $ /home/user1/oneview_splunk python3.6 main.py -i config.json
 
+Above command will prompt for oneview password. Once you enter password, script will run continuously and listen for oneview alerts and converts alerts message into syslog message and writes to a file.
+
+Note: Don't kill the scripts. In the future, this will run as linux service
+      In the future release, user can specify the log file name.
+
 ```
+
+### Note
+Configure oneview to allow local user login if you are logging to oneview as local user.
 
 ### How to test
 Generate alerts from oneview and ensure that the alerts are captured by the script. 
