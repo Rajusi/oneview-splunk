@@ -25,7 +25,7 @@ import os
 import ssl
 import amqplib.client_0_8 as amqp
 
-from common.utils import *
+from internal.utils import *
 
 ##################################################################
 # Initialize certs dir.

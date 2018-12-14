@@ -1,9 +1,9 @@
 {
 	"oneview_config": {
-		"host": "10.188.0.190",
+		"host": "10.188.229.200",
 		"alias": "HPE-oneview",
-		"user": "admin",
-		"passwd": "youroneviewpassword",
+		"user": "Administrator",
+		"authLoginDomain": "LOCAL",
 		"action": "start",
 		"route": "scmb.alerts.#",
 		"alert_type": "Critical:Warning:Ok",

@@ -41,7 +41,7 @@ from datetime import datetime
 ##################################################################
 def validate_oneview_details(oneViewDetails):
 	
-	required_fields = ('host','alias','user','passwd','action','route','alert_type')
+	required_fields = ('host','alias','user','authLoginDomain', 'passwd','action','route','alert_type')
 	# Validate inputs
 	if not all(keys in oneViewDetails for keys in required_fields):
 		logging.error("Oneview details incomplete.")
@@ -50,8 +50,8 @@ def validate_oneview_details(oneViewDetails):
 		sys.exit(1)
 		
 	# Decode password
-	password = base64.b64decode(oneViewDetails['passwd'].encode('utf-8')) 
-	oneViewDetails['passwd'] = password.decode('utf-8')
+	# password = base64.b64decode(oneViewDetails['passwd'].encode('utf-8')) 
+	# oneViewDetails['passwd'] = password.decode('utf-8')
 
 
 ##################################################################

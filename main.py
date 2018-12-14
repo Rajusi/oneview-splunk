@@ -30,6 +30,7 @@ import argparse
 import json
 import ssl
 import logging
+import getpass
 
 import multiprocessing as mp
 from time import sleep
@@ -211,11 +212,15 @@ def main():
 	parser = argparse.ArgumentParser(add_help=True, description='Usage')
 	parser.add_argument('-i','--input_file',dest='input_file', required=True,
 						help='Json file containing oneview details')
+	parser.add_argument('-p','--password',dest='password', required=False,
+                                                help='Password for OneView')
 		
 	# Check and parse the input arguments into python's format
-	inputFile = parser.parse_args()
+	inputParser = parser.parse_args()
+
+	ovPassword = inputParser.password
 	# Parsing file for details  
-	with open(inputFile.input_file) as data_file:	
+	with open(inputParser.input_file) as data_file:	
 		inputConfig = json.load(data_file)
 	# get the logging level
 	loggingLevel = inputConfig["logging_level"].upper()
@@ -229,6 +234,15 @@ def main():
 		print("Error in config files. Check and try again.")
 		print(e)
 		sys.exit(1)
+
+	if inputParser.password:
+		ovPassword = inputParser.password
+		oneViewDetails['passwd'] = ovPassword                                                                             
+
+	else:
+		# Get OneView Password                                                   
+		oneViewDetails['passwd'] = getpass.getpass("\nEnter password for OneView :")  
+		#oneViewDetails['passwd'] = ovPassword                                                                             
 
 	# Initialize logging
 	initialize_logging(oneViewDetails['host'], loggingLevel)
@@ -273,13 +287,14 @@ def main():
 	# Esatblish connection to OneView
 	if oneViewDetails["action"] == "start":
 		logging.debug("Attempting to establish connection with OV SCMB")
-		logging.debug("Arguments: " + str(oneViewDetails))
+		#logging.debug("Arguments: " + str(oneViewDetails))
 
 		ovConfig = {
 			"ip": oneViewDetails["host"],
 			"credentials": {
 				"userName": oneViewDetails["user"],
-				"password": oneViewDetails["passwd"]
+				"password": oneViewDetails["passwd"],
+				"authLoginDomain": oneViewDetails['authLoginDomain']
 			}
 		}
 
